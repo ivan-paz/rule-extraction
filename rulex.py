@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Building rules by looking at contradictions
-Created on Wed Dec  7 17:53:19 2016
-@author: ivan
+A rule extraction algorithm
 """
-presets = (
-(1, 1,'A',1),
-(1, 2,'A',1),
-(1, 3,'A',1),
-(1, 4,'B',1)
-)
+
+#presets = (
+#(1, 1,'A',1),
+#(1, 2,'A',1),
+#(1, 3,'A',1),
+#(1, 4,'B',1)
+#)
 #presets = (
 #(1, 1,'A',1),
 #(2, 1,'A',1),
@@ -30,6 +29,7 @@ def rulex(presets):
                     dictionary = is_compressible(preset_1,preset_2)
                     if dictionary != None:
                         rule = build_rule(preset_1,dictionary)
+                       # print(rule)
                         lst = list(presets)
                         if rule not in lst:
                             lst.append(rule)
@@ -41,7 +41,8 @@ def rulex(presets):
     rules = non_redundant(rules)
     rules = clear_Nones(rules)
     print(rules)
-#rulex(presets)
+    return rules
+
 
 def is_compressible(preset_1,preset_2):
     dictionary = {}
@@ -102,6 +103,21 @@ def non_redundant(rules):
     return rules
 
 #non_redundant([(1, 4, 'B', 1), (1, (1, 2), 'A', 1), (1, (1, 2, 3), 'A', 1)])
+
+
+
+#----------------------------------------------------------
+#                       run script
+#----------------------------------------------------------
+
+# Data format  parameter values | class risk
+presets = (
+        (1, 1, 'A', 1),
+        (2, 1, 'A', 1),
+        (1, 2, 'A', 1),
+        (1, 3, 'A', 1),
+        (1, 4, 'B', 1)
+        )
 rulex(presets)
 
     
