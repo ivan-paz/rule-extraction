@@ -16,18 +16,54 @@ presets = (
 rules = [(1, 4, 'B', 1), ((1, 2), 1, 'A', 1), (1, (1, 3, 11, 12), 'A', 1)]
 
 def build_inference_rules(rules,presets):
-    inf_rules = []
+    inference_rules = []
     _rules_by_classes = rules_by_classes(rules)
     presets = presets_by_classes(presets)
     for key in _rules_by_classes:
         for rule in _rules_by_classes[key]:
-            print(inference_rule(rule,presets))
-            
+            tmp = build_rules(inference_dict(rule,presets))
+            for rule in tmp: inference_rules.append(rule)
+    return inference_rules
+    
 build_inference_rules(rules,presets)
 
-def inference_rule(rule,presets_by_classes):
+
+
+
+
+import itertools
+def build_rules(inference_dict):
+    inference_rules = []
+    a = inference_dict.items()
+    items = []
+    for i in a:
+        if type(i[1]) == int:
+            items.append([i[1]])
+        else:
+            tmp = []
+            for j in i[1]:
+                tmp.append(list(j))
+            items.append(tmp)
+    a = list(itertools.product(*items))
+    for i in a:
+        rule = ()
+        for j in i:
+            if type(j) == int:
+                rule = rule + (j,)
+            elif (type(j)== list and type(j[0])==str):
+                    rule = rule + ( j[0] ,)
+            else:
+                rule = rule + (tuple(j),)  
+        print(rule)
+        inference_rules.append(rule)
+    return inference_rules
+    
+#build_rules({0: [(1, 2)], 1: 1})
+#build_rules({0: 1, 1: [(1, 3), (11, 12)]})
+
+def inference_dict(rule,presets_by_classes):
     inference_dict = {}
-    for i in range( len(rule) - 2 ): #Change if format changes
+    for i in range( len(rule) - 1 ): #Change if format changes
         if type(rule[i]) == tuple:
             _class = rule[-2]  # Change this if the format changes
             different_keys = []
@@ -39,17 +75,6 @@ def inference_rule(rule,presets_by_classes):
         else:
             inference_dict[i]=rule[i]
     return inference_dict
-    
-    
-import itertools                   
-def combine(template, options):
-    products = [dict(zip(options, values)) for values in itertools.product(*options.values())]
-    return [template.format(**p) for p in products]
-pattern = '{name} likes {animal}s'
-options = {'name': ['Alex', 'Sarah', 'Bob'], 'animal': ['cat', 'dog']}    
-    
-combine(pattern,options)
-
 
 def modify_interval(interval, i, different_keys):
     new_interval = []
