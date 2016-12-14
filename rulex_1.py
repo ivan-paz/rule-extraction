@@ -3,6 +3,9 @@
 #---------------------------------------------------------------
 #                              rulex                       -----
 #---------------------------------------------------------------
+# Format    parameter values  | class risk_parameter
+# preset = (  1,        1,      'A',  1)
+
 presets = (
 (1, 1,'A',1),
 (1, 2,'A',1),
@@ -17,7 +20,7 @@ presets = (
 (1,11,'A',1),
 (1,12,'A',1) )
 
-# input presets in tuple format -> output -> rules json format
+# input presets in tuple format -> output -> rules tuple format
 def rulex(presets):
     i = -1
     for preset_1 in presets:
