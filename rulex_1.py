@@ -21,6 +21,7 @@ presets = (
 def rulex(presets):
     i = -1
     for preset_1 in presets:
+        print('preset_1: ',preset_1)
         i = i + 1
         j = -1
         for preset_2 in presets:
@@ -29,17 +30,17 @@ def rulex(presets):
                 if is_compressible(preset_1,preset_2) != False:
                     dictionary = is_compressible(preset_1,preset_2)
                     #print('dictionary',dictionary)
-#################################################################                    
-                    if dictionary != None:
+                    if dictionary != False:
                         rule = build_rule(preset_1, dictionary)
-                        print(rule)
+                        print('rule: ', rule)
                         #delete rules preset_1 and preset_2 and app rule
                         lst = list(presets)
-                        if rule not in lst:###### aqui voy
+                        if rule not in lst:
                             lst.append(rule)
                             lst[i] = None
                             lst[j] = None
                             presets = tuple(lst)
+                        print(presets)
     #eliminate redundant
     rules = clear_Nones(presets)
     rules = non_redundant(rules)
@@ -47,7 +48,6 @@ def rulex(presets):
     print(rules)
     return rules
 rulex(presets)
-
 #---------------------------------------------------------------------------
 #         is_compressible takes as inputs two presets and if they are   ----
 #                 compressible returns a dictionary                     ----
@@ -61,7 +61,7 @@ def is_compressible(preset_1, preset_2):
     for i in range( len(preset_1) - 1 ):
         if(preset_1[i] != preset_2[i]):
             dictionary[i] = set( [ preset_1[i], preset_2[i] ] )
-    print(dictionary)
+    #print(dictionary)
     if bool(dictionary):
         if len(dictionary) <= preset_1[-1] and  preset_1[-2]== preset_2[-2]:
             return dictionary
@@ -84,17 +84,16 @@ is_compressible( (1, 1,'A',1),(2, 3,'A',1) )
 is_compressible( (1, 1,'A',2),(2, 3,'A',1) )
 #Out:  {0: {1, 2}, 1: {1, 3}}
 #-------------------------------------------------------------------------
-
-def build_rule(preset_1,my_dict):
-    my_tuple = ()
-    #print('preset',preset_1,'dictionary',my_dict)
+#                   Build rule recibes (preset_1, dictionary)        -----
+#                         return produced rule                       -----
+#-------------------------------------------------------------------------
+def build_rule(preset_1, my_dict):
     for element in my_dict:
+        my_tuple = ()
         for value in my_dict[element]:
-            #print(type(value))
-            if(type(value)==tuple):
+            if(type(value) == tuple):
                 for i in value: my_tuple = my_tuple + (i,)
             else:
-                #print(value)
                     my_tuple = my_tuple + (value,)
         temp = []
         for i in my_tuple:
@@ -102,40 +101,79 @@ def build_rule(preset_1,my_dict):
                 temp.append(i)
         temp.sort()
         my_tuple = tuple(temp)
-        #check for contradictions to create the rule
+        #Check for contradictions to create the rule if risk > 1
         lst = list(preset_1)
         lst[element]=my_tuple
         preset_1 = tuple(lst)
     return preset_1
-    
-#my_dict =  {1: {(1, 2), 11}}     
-#build_rule((1,11,'A',1),my_dict)
+#----------------------------------------------------------------------------
+#                   tests
+# if empty dictionary returns preset_1
+my_dict = {}
+preset_1 = (1, 1,'A',1)
+build_rule(preset_1,my_dict)
+#Out: (1, 1, 'A', 1)
+# if dict return preset_1 with tuples at indexes of the different keys of dict
+my_dict = {1: {1, 2}}
+preset_1 =(1, 2,'A',1)
+build_rule(preset_1,my_dict)
+#Out: (1, (1, 2), 'A', 1)
+my_dict = {1: {(1, 2), 11}}
+preset_1 = (1, (1,2),'A', 1)
+build_rule(preset_1,my_dict)
+#Out: (1, (1, 2, 11), 'A', 1)
+my_dict = {0: {1, 2}, 1: {1, 3}}
+preset_1 = (1, 1,'A',2)
+build_rule(preset_1,my_dict)
+#Out:  {0: {1, 2}, 1: {1, 3}}
+#---------------------------------------------------------------------------
 def clear_Nones(tuple_type):
     temp = []
     for i in tuple_type:
         if i!=None:
             temp.append(i)
     return temp
-    
+# test
+tuple_type = (None, None, None, (1, 4, 'B', 1), (1, (1, 2), 'A', 1), None, (1, (1, 2, 3), 'A', 1))
+clear_Nones(tuple_type)
+#Out: [(1, 4, 'B', 1), (1, (1, 2), 'A', 1), (1, (1, 2, 3), 'A', 1)]
+#---------------------------------------------------------------------------
+#              Eliminates rules that are contained in other rules        ---
+#                                                                        ---
+#---------------------------------------------------------------------------
 def non_redundant(rules):
     counter = -1
     for rule1 in rules:
         counter = counter + 1
         for rule2 in rules:
-            if rule2 != None:
+            if rule2 != None and rule2 != rule1:
+                contained = 0
                 bolean = [(rule1 == rule2) for rule1, rule2 in zip(rule1,rule2)]
+                trues = sum(bolean)
                 for i in range(len(bolean)):
                     if bolean[i] == False:
-                        if type(rule1[i])==type(rule2[i])==tuple:
-                            a = [j in rule2[i] for j in rule1[i]]
-                            count = 0
-                            for entrance in a:
-                                if entrance == True:
-                                    count = count + 1
-                                    if count == len(a):
-                                        rules[counter]=None  
+                        set1 = build_set(rule1[i])
+                        set2 = build_set(rule2[i])
+                        if set1.issubset(set2):
+                            contained = contained + 1
+                if trues + contained == len(rule1):
+                    rules[counter] = None
     return rules
+# test
+non_redundant([(1, 4, 'B', 1), (1, (1, 2), 'A', 1), (1, (1, 2, 3), 'A', 1)])
+#Out: [(1, 4, 'B', 1), None, (1, (1, 2, 3), 'A', 1)]
+non_redundant([ (1, 4, 'B', 1),(1, 1, 'A', 1),(1, (1, 2, 3), 'A', 1)])
+#Out: [(1, 4, 'B', 1), None, (1, (1, 2, 3), 'A', 1)]
+non_redundant([ (1, (1,2), 1, 'A', 1),(1, 1, (1, 2, 3), 'A', 1)])
+#Out: [(1, (1, 2), 1, 'A', 1), (1, 1, (1, 2, 3), 'A', 1)]
 
-#non_redundant([(1, 4, 'B', 1), (1, (1, 2), 'A', 1), (1, (1, 2, 3), 'A', 1)])
-    
+def build_set(i):
+    if type(i)==tuple:
+        _set = set()
+        for j in i:
+            _set.add(j)
+    else:
+        _set = set([i])
+    return _set
+
     
