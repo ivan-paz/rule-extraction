@@ -3,8 +3,8 @@
 #---------------------------------------------------------------
 #                              rulex                       -----
 #---------------------------------------------------------------
-# Format    parameter values  | class risk_parameter
-# preset = (  1,        1,      'A',  1)
+# Format    parameter_values  | class risk_parameter
+# preset = (  1,        1,      'A',  1    )
 
 presets = (
 (1, 1,'A',1),
@@ -169,7 +169,7 @@ non_redundant([ (1, 4, 'B', 1),(1, 1, 'A', 1),(1, (1, 2, 3), 'A', 1)])
 #Out: [(1, 4, 'B', 1), None, (1, (1, 2, 3), 'A', 1)]
 non_redundant([ (1, (1,2), 1, 'A', 1),(1, 1, (1, 2, 3), 'A', 1)])
 #Out: [(1, (1, 2), 1, 'A', 1), (1, 1, (1, 2, 3), 'A', 1)]
-
+#--------------------------------------------------------------
 def build_set(i):
     if type(i)==tuple:
         _set = set()
@@ -178,5 +178,10 @@ def build_set(i):
     else:
         _set = set([i])
     return _set
+#test
+build_set(1)
+#Out: {1}
+build_set((1,2,3))
+#Out: {1, 2, 3}
 
     
