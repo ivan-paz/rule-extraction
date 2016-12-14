@@ -84,7 +84,7 @@ is_compressible( (1, 1,'A',1),(2, 3,'A',1) )
 is_compressible( (1, 1,'A',2),(2, 3,'A',1) )
 #Out:  {0: {1, 2}, 1: {1, 3}}
 #-------------------------------------------------------------------------
-#                   Build rule recibes (preset_1, dictionary)        -----
+#                   Build rule receives (preset_1, dictionary)        -----
 #                         return produced rule                       -----
 #-------------------------------------------------------------------------
 def build_rule(preset_1, my_dict):
