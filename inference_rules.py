@@ -5,6 +5,7 @@ Created on Sat Dec 10 20:35:08 2016
 @author: ivan
 """
 
+"""
 presets = (
 (1, 1,'A',1),
 (2, 1,'A',1),
@@ -21,7 +22,7 @@ presets = (
 (2, 1, 1, 'A', 1),
 (1, 3, 1, 'B', 1) )
 rules =  [(1, 3, 1, 'B', 1), ((1, 2), 1, 1, 'A', 1), (1, (1, 2, 4), 1, 'A', 1)]
-
+"""
 def build_inference_rules(rules,presets):
     inference_rules = []
     _rules_by_classes = rules_by_classes(rules)
@@ -31,9 +32,8 @@ def build_inference_rules(rules,presets):
             #print(key,rule)
             tmp = build_rules( inference_dict( rule, presets ) )
             for rule in tmp: inference_rules.append(rule)
-    return inference_rules
-    
-build_inference_rules(rules,presets)
+    return inference_rules   
+#build_inference_rules(rules,presets)
 
 import itertools
 def build_rules(inference_dict):
