@@ -6,6 +6,7 @@
 # Format    parameter_values  | class risk_parameter
 # preset = (  1,        1,      'A',  1    )
 
+"""
 presets = (
 (1, 1,'A',1),
 (1, 2,'A',1),
@@ -19,6 +20,7 @@ presets = (
 (1, 4,'B',1),
 (1,11,'A',1),
 (1,12,'A',1) )
+"""
 
 # input presets in tuple format -> output -> rules tuple format
 def rulex(presets):
@@ -50,7 +52,8 @@ def rulex(presets):
     rules = clear_Nones(rules)
     print(rules)
     return rules
-rulex(presets)
+
+#rulex(presets)
 #---------------------------------------------------------------------------
 #         is_compressible takes as inputs two presets and if they are   ----
 #                 compressible returns a dictionary                     ----
@@ -71,6 +74,7 @@ def is_compressible(preset_1, preset_2):
         else:
             return False
 #----------------------------------------------------------------------------
+"""
 #                   tests
 # if preset_1 == preset_2 returns empty dictionary
 is_compressible( (1, 1,'A',1),(1, 1,'A',1) )
@@ -86,6 +90,7 @@ is_compressible( (1, 1,'A',1),(2, 3,'A',1) )
 #Out: False
 is_compressible( (1, 1,'A',2),(2, 3,'A',1) )
 #Out:  {0: {1, 2}, 1: {1, 3}}
+"""
 #-------------------------------------------------------------------------
 #                   Build rule receives (preset_1, dictionary)        -----
 #                         return produced rule                       -----
@@ -110,6 +115,7 @@ def build_rule(preset_1, my_dict):
         preset_1 = tuple(lst)
     return preset_1
 #----------------------------------------------------------------------------
+"""
 #                   tests
 # if empty dictionary returns preset_1
 my_dict = {}
@@ -129,6 +135,7 @@ my_dict = {0: {1, 2}, 1: {1, 3}}
 preset_1 = (1, 1,'A',2)
 build_rule(preset_1,my_dict)
 #Out:  {0: {1, 2}, 1: {1, 3}}
+"""
 #---------------------------------------------------------------------------
 def clear_Nones(tuple_type):
     temp = []
@@ -136,10 +143,12 @@ def clear_Nones(tuple_type):
         if i!=None:
             temp.append(i)
     return temp
+"""
 # test
 tuple_type = (None, None, None, (1, 4, 'B', 1), (1, (1, 2), 'A', 1), None, (1, (1, 2, 3), 'A', 1))
 clear_Nones(tuple_type)
 #Out: [(1, 4, 'B', 1), (1, (1, 2), 'A', 1), (1, (1, 2, 3), 'A', 1)]
+"""
 #---------------------------------------------------------------------------
 #              Eliminates rules that are contained in other rules        ---
 #                                                                        ---
@@ -162,6 +171,7 @@ def non_redundant(rules):
                 if trues + contained == len(rule1):
                     rules[counter] = None
     return rules
+"""
 # test
 non_redundant([(1, 4, 'B', 1), (1, (1, 2), 'A', 1), (1, (1, 2, 3), 'A', 1)])
 #Out: [(1, 4, 'B', 1), None, (1, (1, 2, 3), 'A', 1)]
@@ -169,6 +179,7 @@ non_redundant([ (1, 4, 'B', 1),(1, 1, 'A', 1),(1, (1, 2, 3), 'A', 1)])
 #Out: [(1, 4, 'B', 1), None, (1, (1, 2, 3), 'A', 1)]
 non_redundant([ (1, (1,2), 1, 'A', 1),(1, 1, (1, 2, 3), 'A', 1)])
 #Out: [(1, (1, 2), 1, 'A', 1), (1, 1, (1, 2, 3), 'A', 1)]
+"""
 #--------------------------------------------------------------
 def build_set(i):
     if type(i)==tuple:
@@ -178,10 +189,10 @@ def build_set(i):
     else:
         _set = set([i])
     return _set
+"""
 #test
 build_set(1)
 #Out: {1}
 build_set((1,2,3))
 #Out: {1, 2, 3}
-
-    
+""" 
