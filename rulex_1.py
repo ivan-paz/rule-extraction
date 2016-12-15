@@ -43,7 +43,7 @@ def rulex(presets):
                             lst[i] = None
                             lst[j] = None
                             presets = tuple(lst)
-                        print(presets)
+                        #print(presets)
     #eliminate redundant
     rules = clear_Nones(presets)
     rules = non_redundant(rules)
