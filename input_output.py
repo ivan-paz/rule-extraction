@@ -37,8 +37,8 @@ def load_presets(file_to_open = 'presets.json'):
 #------------------------------------------------------------
 #                        Rule extraction
 #------------------------------------------------------------
-from rulex_1 import *
-rules = rulex(presets)
+#from rulex_1 import *
+#rules = rulex(presets)
 #------------------------------------------------------------
 #                                                         ---
 #                write the rules into a file              ---
