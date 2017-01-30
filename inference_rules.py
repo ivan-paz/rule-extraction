@@ -6,6 +6,12 @@ Created on Sat Dec 10 20:35:08 2016
 """
 
 """
+Functions that build the Inference Rules
+Inputs: original presets, Strict Rules
+Output: Inference Rules
+"""
+
+"""
 presets = (
 (1, 1,'A',1),
 (2, 1,'A',1),
@@ -14,7 +20,7 @@ presets = (
 (1,11,'A',1),
 (1,12,'A',1) )
 rules = [(1, 4, 'B', 1), ((1, 2), 1, 'A', 1), (1, (1, 3, 11, 12), 'A', 1)]
-#-----------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 presets = (
 (1, 1, 1, 'A', 1),
 (1, 2, 1, 'A', 1),
@@ -41,7 +47,7 @@ def build_rules(inference_dict):
     a = inference_dict.items()
     items = []
     for i in a:
-        if type(i[1]) == int:
+        if type(i[1]) == int or type(i[1]) == float: #********* int or float
             items.append([i[1]])
         else:
             tmp = []
@@ -52,7 +58,7 @@ def build_rules(inference_dict):
     for i in a:
         rule = ()
         for j in i:
-            if type(j) == int:
+            if type(j) == int or type(j) == float: # ********* int or float
                 rule = rule + (j,)
             elif (type(j)== list and type(j[0])==str):
                     rule = rule + ( j[0] ,)
