@@ -58,10 +58,24 @@ def compare_with_presets(i,rule,presets_different_class):
     rule = cut_rule(i,rule)
     for preset in presets_different_class:
         preset = cut_preset(i,preset)
-        print(rule, preset)
-        #pairwise comparison
+        print(preset, rule)
+        #Excluding a parameter see if the rest of entrances are equal
+           
+compare_with_presets(0,((1, 2, 3, 8, 11), (4, 6), 1, 'A', 1), [[5, 4, 1, 'B',1]])
 
-compare_with_presets(0,((1, 2, 3, 8, 11), (4, 6), 'A', 1),[[5,4,'B',1]])
+def pairwise(preset,rule):
+    flag = 0
+    for i in range(len(rule)):
+        print(preset[i],rule[i])
+        
+        if (preset[i]==rule[i] or preset[i] in rule[i]):
+            flag = 1
+        else:
+            return False
+            break
+    if flag == 1:
+        return True
+pairwise([4, 1],[(4, 6), 1])
 
 
 def cut_rule(i,rule):
@@ -69,13 +83,14 @@ def cut_rule(i,rule):
     rule = rule[:-2]
     del rule[i]
     return rule
-cut_rule(0,((1, 2, 3, 8, 11), (4, 6), 'A', 1))
+#cut_rule(0,((1, 2, 3, 8, 11), (4, 6), 'A', 1))
 
 def cut_preset(i,preset):
     preset = preset[:-2] #Change this if format changes
     del preset[i]
     return preset
-cut_preset(0,[5,4,'B',1])
+#cut_preset(0,[5,4,'B',1])
 
 
-
+[(4,6)] == [4]
+4 in (4,6) 
