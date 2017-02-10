@@ -51,7 +51,7 @@ def find_contradictions(rule,presets_different_class):
             #find if there are identical rules differing
             #in that parameter
 find_contradictions(rule,presets_different_class)
-
+#-----------------------------------------------------------------------
 
 #find if there are identical presets differin in that parameter
 def compare_with_presets(i,rule,presets_different_class):
@@ -60,22 +60,28 @@ def compare_with_presets(i,rule,presets_different_class):
         preset = cut_preset(i,preset)
         print(preset, rule)
         #Excluding a parameter see if the rest of entrances are equal
-           
-compare_with_presets(0,((1, 2, 3, 8, 11), (4, 6), 1, 'A', 1), [[5, 4, 1, 'B',1]])
+         
+compare_with_presets(0,((1, 2, 3, 8, 11), (4, 6), 1, 'A', 1), [[5, 4, 1, 'B',1],[1, 1, 1, 'B',1]])
 
 def pairwise(preset,rule):
-    flag = 0
+    count = 0
     for i in range(len(rule)):
         print(preset[i],rule[i])
-        
-        if (preset[i]==rule[i] or preset[i] in rule[i]):
-            flag = 1
+        if preset[i]==rule[i]:
+            print('equals',preset[i],rule[i])
+            count = count + 1
         else:
-            return False
-            break
-    if flag == 1:
+            if preset[i] in rule[i]:
+                print('in',preset[i],rule[i])
+                count = count + 1
+    print(count)
+    if count == len(rule):
         return True
+    else:
+        return False
+        
 pairwise([4, 1],[(4, 6), 1])
+pairwise([1, 1], [(4, 6), 1])
 
 
 def cut_rule(i,rule):
@@ -84,13 +90,8 @@ def cut_rule(i,rule):
     del rule[i]
     return rule
 #cut_rule(0,((1, 2, 3, 8, 11), (4, 6), 'A', 1))
-
 def cut_preset(i,preset):
     preset = preset[:-2] #Change this if format changes
     del preset[i]
     return preset
 #cut_preset(0,[5,4,'B',1])
-
-
-[(4,6)] == [4]
-4 in (4,6) 

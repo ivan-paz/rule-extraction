@@ -39,11 +39,45 @@ for i in rules:print(i)
 
 #-----------------------------------------------------
 
-
-
-
-
 from inference_rules import *
 #Inference Rules from Strict Rules
 inference_rules = build_inference_rules(rules,presets)
-for i in inference_rules:print(i)
+for i in inference_rules:print(i):
+    
+   
+   
+   
+   
+   
+   
+
+"""
+Three concrete examples of rule extraction
+to analyze how to manage the interval breaking
+""" 
+presets = [
+[1, 1, 'A', 1],
+[2, 1, 'A', 1],
+[3, 1, 'B', 1],
+[4, 1, 'A', 1],
+[6, 1, 'A', 1]
+]
+from rulex_1 import *
+
+rules = rulex(presets)
+from inference_rules import *
+inference_rules = build_inference_rules(rules,presets)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
