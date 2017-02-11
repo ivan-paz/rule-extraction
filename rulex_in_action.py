@@ -62,10 +62,11 @@ presets = [
 [4, 1, 'A', 1],
 [6, 1, 'A', 1]
 ]
+
 from rulex_1 import *
+from inference_rules import *
 
 rules = rulex(presets)
-from inference_rules import *
 inference_rules = build_inference_rules(rules,presets)
 
 
