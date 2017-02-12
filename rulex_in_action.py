@@ -5,6 +5,9 @@ Created on Fri Dec 16 11:21:59 2016
 @author: ivan
 """
 
+
+# Example  1
+
 presets = [
 [ 1,         1,  1,   'D', 1 ],
 
@@ -36,25 +39,27 @@ from rulex_1 import *
 #Strict Rules
 rules = rulex(presets)
 for i in rules:print(i)
-
 #-----------------------------------------------------
-
 from inference_rules import *
 #Inference Rules from Strict Rules
 inference_rules = build_inference_rules(rules,presets)
 for i in inference_rules:print(i):
-    
-   
-   
-   
-   
-   
-   
+
+
+#---------------------------------------------------------------
+#---------------------------------------------------------------
+#---------------------------------------------------------------
+#---------------------------------------------------------------   
+
+#  Example 2
 
 """
 Three concrete examples of rule extraction
 to analyze how to manage the interval breaking
 """ 
+from rulex_1 import *
+from inference_rules import *
+
 presets = [
 [1, 1, 'A', 1],
 [2, 1, 'A', 1],
@@ -62,16 +67,41 @@ presets = [
 [4, 1, 'A', 1],
 [6, 1, 'A', 1]
 ]
-
-from rulex_1 import *
-from inference_rules import *
-
 rules = rulex(presets)
+rules = rulex(rules)
 inference_rules = build_inference_rules(rules,presets)
 
 
 
+#  Example  3 
+presets = [
+[1,  4, 'A', 1],
+[1,  6, 'A', 1],
+[2,  4, 'A', 1],
+[2,  6, 'A', 1],
+[3,  4, 'A', 1],
+[3,  6, 'A', 1],
+[8,  4, 'A', 1],
+[8,  6, 'A', 1],
+[11, 4, 'A', 1],
+[11, 6, 'A', 1],
+[5,  4, 'B', 1]
+]
+rules = rulex(presets)
+rules = rulex(rules)
+inference_rules = build_inference_rules(rules,presets)
+"""
+current out
+((1, 2), (4, 6), 'A')
+((2, 3), (4, 6), 'A')
+((8, 11), (4, 6), 'A')
+(5, 4, 'B')
 
+it should be:
+((1,2,3),(4,6), 'A', 1),
+((8,11), (4,6), 'A', 1),
+(5, 4,'B', 1)
+"""
 
 
 
