@@ -43,7 +43,7 @@ for i in rules:print(i)
 from inference_rules import *
 #Inference Rules from Strict Rules
 inference_rules = build_inference_rules(rules,presets)
-for i in inference_rules:print(i):
+for i in inference_rules:print(i)
 
 
 #---------------------------------------------------------------
@@ -69,6 +69,7 @@ presets = [
 ]
 rules = rulex(presets)
 rules = rulex(rules)
+print(type(rules))
 inference_rules = build_inference_rules(rules,presets)
 
 
