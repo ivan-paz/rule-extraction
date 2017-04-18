@@ -104,12 +104,35 @@ it should be:
 (5, 4,'B', 1)
 """
 
+presets = [
+[1,  6, 'A', 1],
+[3,  6, 'A', 1],
+[2,  4, 'A', 1],
+[2,  8, 'A', 1]
+]
+rules = rulex(presets)
+rules = rulex(rules)
 
+#-----------------------------------------------------------
+# This example shows when the order in rulex matters
+presets = [
+[ 5, 5, 'D', 1],
+[ 2, 7, 'D', 1],
+[ 5, 7, 'D', 1]
+]
+rules = rulex(presets)
+rules1 = rulex(rules)
 
+presets = [ ( (2,5), 7, 'D', 1), ( 5, 5, 'D', 1)]
+rules = rulex(presets)
+rules1 = rulex(rules)
+#-----------------------------------------------------------
 
-
-
-
+presets = [
+((2, 5), 7, 'D',1), (4, 7, 'D',1)
+]
+rules = rulex(presets)
+rules1 = rulex(rules)
 
 
 
