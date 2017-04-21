@@ -68,7 +68,7 @@ def is_compressible(preset_1, preset_2):
         if(preset_1[i] != preset_2[i]):
             dictionary[i] = set( [ preset_1[i], preset_2[i] ] )
     #print(dictionary)
-    if bool(dictionary):
+    if bool(dictionary):  #<= RISK
         if len(dictionary) <= preset_1[-1] and  preset_1[-2]== preset_2[-2]:
             return dictionary
         else:
