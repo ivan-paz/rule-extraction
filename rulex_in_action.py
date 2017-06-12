@@ -135,4 +135,11 @@ rules = rulex(presets)
 rules1 = rulex(rules)
 
 
+print('----------------------    prove --------------------------------')
+presets = [ [5,4,'B',1],[5,5,'B',1],[5,6,'B',1],[4,4,'B',1],[3,4,'B',1],[4,6,'B',1]]
+rules = rulex(presets)
+rules = rulex(rules)
+rules = rulex(rules)
+for i in rules:
+    print(i)
 
